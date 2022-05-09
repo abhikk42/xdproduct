@@ -109,18 +109,20 @@ export default {
 .footerHeader{
     display: flex;
     align-items: center;
-         margin:40px 22.6px;
+    padding:40px 22.6px;
 
-    width: 100%;
+    width: 95%;
 }
 .footerHeader>.img1{
     justify-content: flex-start;
+    width: 45%;
 }
 .footerHeader>.img2{
     justify-content: center;
 }
 .footerHeader > .img3{
     justify-content: flex-end;
+    width:50%;
 }
 .footerFirstCol{
     display: grid;

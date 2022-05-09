@@ -160,6 +160,7 @@ flex-basis: 75%;
 .btn{
     background:white;
     height: 40px;
+    cursor: pointer;
     font-size: 16px;
     width:40px;
     border:none

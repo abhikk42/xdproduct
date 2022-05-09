@@ -68,7 +68,7 @@ export default {
         {
             this.processStatus='waiting';
              const resp=await axios.get(api,{
-               params:{service:'category',store:1,url_key:this.url_key,page:this.page,count:'20',sort_by:this.sort,sort__dir:this.sortdir,filter:this.filter}
+               params:{service:'category',store:1,url_key:this.url_key,page:this.page,count:'20',sort_by:this.sort,sort_dir:this.sortdir,filter:this.filter}
              });
              if(resp.status==200 || resp.status==201)
              {

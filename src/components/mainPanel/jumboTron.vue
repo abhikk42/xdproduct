@@ -181,6 +181,7 @@ font-size: 18px;
     background: white;
     margin-left:40px;
     height: 46px;
+    cursor: pointer;
     color:#303030;
     padding:0px 20px;
     font-size: 14px;
