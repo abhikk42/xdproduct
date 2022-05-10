@@ -18,18 +18,22 @@
     </div>
     <div class="midHeader">
       <div class="leftList">
-        <div class="list"><h2>Women <img src="@/assets/down.svg"/></h2></div>
-        <div class="list"><h2>Men <img src="@/assets/down.svg"/></h2></div>
-        <div class="list"><h2>Sale </h2></div>
-        <div class="list"><h2>Collection <img src="@/assets/down.svg"/></h2></div>
-      </div>
 
+        <div class="list"><h2>Women </h2><img src="@/assets/down.svg"/></div>
+        <div class="list"><h2>Men </h2><img src="@/assets/down.svg"/></div>
+        <div class="list"><h2>Sale </h2></div>
+        <div class="list"><h2>Collection </h2><img src="@/assets/down.svg"/></div>
+      </div>
+        
       <div class="list logo">
+        <font-awesome-icon icon="bars" class="responsivetoggler" @click="handleMobileMenu()"></font-awesome-icon>
+           <img src='@/assets/footerLogo.svg/' class="logoimg1">
         <img src="@/assets/logonew.svg" class="logoimg" />
       </div>
       <div class="rightList">
         <div class="list">
-           <h2>Our Stories <img src="@/assets/down.svg"/></h2>
+           <h2>Our Stories </h2>
+           <!-- <img src="@/assets/down.svg"/> -->
         </div>
          <div class="list">  <h2>CRAFTMANSHIP</h2></div>
           
@@ -48,19 +52,48 @@
 
 
       </div>
+     
     </div>
+    <div class="mobilemenu" v-if="mobilemenu">
+      <div class="mobilemenuhead">
+  
+                <h4 :style="{color:'white'}">MENU</h4>
+                <button class="btncross" v-on:click="handleMobileMenu()"><font-awesome-icon icon="fa-x"  class="cross"/></button></div>
+   
+
+  <div class="list"><h2>Women </h2><img src="@/assets/down.svg"/></div>
+        <div class="list"><h2>Men </h2><img src="@/assets/down.svg"/></div>
+        <div class="list"><h2>Sale </h2></div>
+        <div class="list"><h2>Collection </h2><img src="@/assets/down.svg"/></div>
+
+         <div class="list">
+           <h2>Our Stories </h2><img src="@/assets/down.svg"/>
+        </div>
+         <div class="list">  <h2>CRAFTMANSHIP</h2></div>
+    </div>
+  
   </div>
 </template>
 
 <script>
 export default {
   name: "header-comp",
+ 
   data() {
     return {
       list: ["Women ", "Women", "Sale", "Collection"],
       rightList: ["OUR STORY", "CRAFTMANSHIP"],
+      mobilemenu:false,
+      openFilter:true,
     };
   },
+  methods:{
+   handleMobileMenu()
+   {
+    
+     this.mobilemenu=this.mobilemenu==true?false:true;
+   }
+  }
 };
 </script>
 
@@ -83,6 +116,7 @@ export default {
 
   width: 100%;
 }
+
 .firstHeader{ 
   border-top:none;   
     border-bottom:1px solid 	rgb(240,240,240);
@@ -140,6 +174,8 @@ justify-content: center
 }
 
 .list {
+  display: inline-flex;
+  justify-content: center;
   width: 20%;
 }
 .list > h2 {
@@ -147,9 +183,14 @@ justify-content: center
   font-size: 16px;
   text-transform: uppercase;
 }
-.list > img{
+.list > img,.rightList>img{
       vertical-align: middle;
+      margin:0px 5px;
+      font-size:14px;
 
+}
+.logoimg1{
+  display: none;
 }
 .logo {
   display: inline-flex;
@@ -170,10 +211,14 @@ height: 104px;
 
 
 }
+.responsivetoggler{
+  display: none;
+}
 .rightList>.icons{
   flex:2;
   margin:0px auto;
 }
+
 .selicon{
  height: 25px;
   float:right;
@@ -182,22 +227,72 @@ height: 104px;
 
  
 }
+.mobilemenu{
+  display: none;
+}
 @media(max-width: 768px)
 {
   .headContainer{
   max-width: 100vw;
-};
+}
+.mobilemenuhead{
+     
+      background: #501337;
+      display: flex;
+      align-items: center;
+      padding:0px 10px;
+      justify-content: space-between;
+      width: 100%;
+      height: 10%;
+    
+
+}
+ .btncross{
+background: none;
+font-size: 20px;
+border:none;
+color:white;
+    }
+.mobilemenu{
+  display: flex;
+  width:70%;
+  position: fixed;
+  top:0;
+  background:white;
+  z-index: 2;
+  height: 100%;
+  flex-direction: column;
+  transition: 0.5s;
+}
+.mobilemenu>.list{
+  width:100%;
+  display: inline-flex;
+  justify-content: space-between;
+  margin:0px auto;
+  align-items: center;
+  padding:18px 10%;
+}
 .midHeader{
+  display: flex;
+  width:100%;
+}
+.logoimg{
   display: none;
 }
 .logo{
-  width:100%;
-  justify-content: center;
-  height: 20%;
+  width:50%;
+  justify-content: flex-start;
+  height: 10%;
 }
-.midHeader .leftList,.midHeader .rightList{
+.logoimg1{
+  display: block;
+
+}
+.midHeader .leftList,.firstHeader{
   display: none;
-  background: blue;
+}
+.rightList{
+  width:50%;
 }
 .sidepanel  {
   width: 0;
@@ -224,13 +319,29 @@ height: 104px;
 .sidepanel a:hover {
   color: #f1f1f1;
 }
-
+.responsivetoggler{
+  display: block;
+  padding:0px 20px;
+}
 .sidepanel .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
 }
+.selicon{
+  margin:0px 15px;
+  height: 90%;
+}
+.rightList>.list{
+  display: none;
+}
+.rightList>.icons{
+  flex:1;
+  margin:0px;
+
+}
+
 
 .openbtn {
   font-size: 20px;
@@ -239,6 +350,11 @@ height: 104px;
   color: white;
   padding: 10px 15px;
   border: none;
+}
+.logoimg1{
+  padding:auto 10px;
+  height: 50%;
+
 }
 
 .openbtn:hover {

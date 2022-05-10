@@ -16,7 +16,6 @@
             </div>
 
             <select v-model="selectedValue" class="sortbtn" @change="getSortedApi($event)">
-         <option disabled value="">Sort By</option>
          <option v-for="item in sortArray"  :key="item" :value="item" >{{item}}</option>
      </select>
         </div>
@@ -39,10 +38,10 @@ export default {
             itemSelected:'Womens Pashima Shawls',
             totalItems:810,
             togglerText:'HIDE FILTER',
-            selectedValue:"",
+            selectedValue:"Sort By",
             filterarray:[],
             data:'',
-            sortArray:['Newest','Price(Low to High)','Price(High to Low)','Discount'],
+            sortArray:['Sort By','Newest','Price(Low to High)','Price(High to Low)','Discount'],
         api:'https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=20&sort_by=&sort_dir=desc&filter=',
 
 
@@ -71,6 +70,11 @@ export default {
            this.$emit("handleToggle",this.togglerText)
 
 
+        },
+        handleMobileSort(value)
+        {
+           this.selectedValue=value;
+           this.getSortedApi();
         },
 
        getFilteredData(data)
@@ -105,6 +109,10 @@ export default {
            {
                sortjs.sort_by='product_position';
                sortjs.sort_dir=`desc`
+           }else if(this.selectedValue=='Sort By')
+           {
+               sortjs.sort_by='';
+               sortjs.sort_dir='desc'
            }
            this.$emit("sorted",sortjs)
 
@@ -160,6 +168,7 @@ export default {
     font-size: 13px;
     padding:0px 1%;
     margin: 0px 10px;
+    cursor: pointer;
 
     text-align: center;
     justify-content: center;
@@ -216,6 +225,7 @@ margin-right: 22px;
 .bottomrow{
     display: flex;
     width:100%;
+    cursor: pointer;
     margin-top:20px;
     margin-bottom: 10px;
     align-items: center;
@@ -224,6 +234,15 @@ margin-right: 22px;
 @media(max-width:750px)
 {
     .leftAction{
+        display: none;
+    }
+    .displayfilter{
+        display: none;
+    }
+    .rightAction{
+        display: none;
+    }
+    .bottomrow{
         display: none;
     }
 }

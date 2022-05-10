@@ -4,11 +4,11 @@ import router from './router'
 
 import Fragment from 'vue-fragment';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret,faPlus,faMinus, faSliders,faAngleRight, faAngleLeft, faX } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret,faPlus,faMinus, faSliders,faAngleRight, faAngleLeft, faX,faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-library.add(faUserSecret,faPlus,faMinus,faSliders,faAngleRight,faAngleLeft,faX)
+library.add(faUserSecret,faPlus,faMinus,faSliders,faAngleRight,faAngleLeft,faX,faBars)
 
 
 Vue.use(Fragment.Plugin);

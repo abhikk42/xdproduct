@@ -6,12 +6,11 @@
 <div v-if="data[ind].open=='true'">
     <div v-for="value in val.options" :key="value.value" class="checkbox">
         
-    <input type="checkbox" :id="value.value" :value="value" class="checker" v-model="checkedArray"  @click="handleChecked($event,value)">
+    <input type="checkbox" :id="value.value" :value="value" class="checker" :checked="checkedArray.findIndex(val=>val.value==value.value&&val.code==value.code)>=0"  @change="handleChecked($event,value)">
 <label for="checkbox" class='checkboxlabel' @click="handleChecked($event,value)">{{ value.value }}</label>
     </div>
 
 </div>
-<hr/>
     </div>
 </div>
 </template>
@@ -26,6 +25,7 @@ export default {
         return{filterItems:['Types in shawl','price'],
         data:[{open:'true'},{open:false}],
         checkedArray:[],
+        checkboxValue:[],
         api:'https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=20&sort_by=&sort_dir=desc&filter=',
         filteredApi:''
             
@@ -64,8 +64,10 @@ export default {
 
                 
             }
+           
         
         }
+        console.log(this.checkedArray)
        
     },
     methods:{
@@ -143,7 +145,7 @@ export default {
   color: #444;
   cursor: pointer;
   text-transform: uppercase;
-  padding: 18px 20px 18px 40px; 
+  padding: 18px 0px 18px 0px; 
   width: 100%;
   border: none;
   text-align: left;
@@ -156,6 +158,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     width:100%;
+    background: white;
 
 }
 .icon{
@@ -163,13 +166,12 @@ export default {
     font-size: 16px;
 }
 .filterdiv{
-    width:100%;
+    width:90%;
+    margin:0px 40px;
+    border-bottom: 1px solid #707070 ;
 }
 .checkbox{
-  margin-left:40px;
-  margin-top:10px;
-  margin-bottom: 10px;
-  margin-right:90px;
+  margin-bottom: 18px;
 }
 .checker{
     height: 22px;
@@ -180,7 +182,7 @@ width: 22px;
 }
 
 .checkboxlabel{
-    margin: auto 11px;
+    margin: auto 18px;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
@@ -188,12 +190,7 @@ width: 22px;
     font-size: 16px;
     font-family: 'Jost';
 }
-hr{
-     width:85%;
-     margin-left: 40px;
-    
 
-}
 
 
 .panel {
@@ -202,6 +199,19 @@ hr{
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+}
+
+@media(max-width: 768px)
+{
+    .filterdiv{
+        margin:0px auto;
+
+    }
+    .filterComp{
+        width:100%;
+        margin-bottom: 40px;
+    }
+
 }
 
 

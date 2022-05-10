@@ -8,6 +8,25 @@
         <left-panel @filtered="handleFilter" @filtereddata="getFilteredData" ref='leftpanel'/>
 
       </div>
+        <div class="mobileleft" v-if=" openMobileFilter" >
+            <div class="closinghead">
+                <h4>Applied Filters</h4>
+                <button class="btnred" v-on:click="handleMobileMenu()"><font-awesome-icon icon="fa-x"  class="cross"/></button>
+                 <div class="displayfilter">
+                <p v-for="val in filterdata" :key="val.value" class="item" @click="handleRemoveFilterByJumbo(val)">{{val.value}} <font-awesome-icon icon="fa-x"  class="cross"/></p>
+
+            </div>
+            <div class="inlinerrow">
+             <button class="clearfilter" v-on:click="clearFilter()" v-if="filterdata.length>0">
+                 Clear All
+             </button>
+
+            </div>
+
+                </div>
+        <left-panel @filtered="handleFilter" @filtereddata="getFilteredData" ref='leftpanel1'/>
+
+      </div>
       <div class="right" id='right'>
       
       <right-panel ref="rightComp"/>
@@ -15,16 +34,32 @@
        <div class="paginationrow">
            <div class="pagecol1"></div>
            <div class="pagecol2">
-             <button class="btn next" @click="handlePage(activePage-1)" v-if="activePage>1"><font-awesome-icon icon="fa-angle-left" />  Prev</button>
+             <button class="btn next" @click="handlePage(activePage-1)" v-if="activePage>1"><font-awesome-icon icon="fa-angle-left" class="anglebtn" />  Prev</button>
 
                <button  v-for="val in pages" :key="val" :class="activePage==val?'btn active':'btn'" @click="handlePage(val)">{{val}}</button>
          
-               <button class="btn next" @click="handlePage(activePage+1)" v-if="activePage<totalPages-1">Next    <font-awesome-icon icon="fa-angle-right" /></button>
+               <button class="btn next" @click="handlePage(activePage+1)" v-if="activePage<totalPages-1">Next<font-awesome-icon icon="fa-angle-right" class="anglebtn" /></button>
 
 
            </div>
           
 
+      </div>
+     
+      <div class="mobilesort" v-if="openmobilesort">
+          <div class="card">
+              <div class="sortitem"><h3>Sort By</h3></div>
+              <div v-for="val in sortArray" :key="val" class="sortitem" @click="handleMobileSort(val)">{{val}}</div>
+          </div>
+
+
+      </div>
+      <div class="mobilesortdiv">
+        <div class="sort" @click="openmobilesort=true">Sort
+        </div>
+        <div class="filter" v-on:click="handleMobileMenu">Filter</div>
+
+         
       </div>
       
   </div>
@@ -45,9 +80,14 @@ export default {
           api:'https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=20&sort_by=&sort_dir=desc&filter=',
           pages:[1,2,3,4,5,6],
           totalPages:'',
+          openmobilesort:false,
+          filterdata:'',
           filterObject:{filter:"",sort_by:'',sort_dir:'desc',page:1},
           filtervalue:"",
+         sortArray:['Newest','Price(Low to High)','Price(High to Low)','Discount'],
+
           activePage:1,
+          openMobileFilter:false,
           data:""
       }
 
@@ -60,6 +100,14 @@ export default {
 
         
 
+      },
+      handleMobileSort(value)
+      {
+           this.$refs.jumbo.handleMobileSort(value);
+           this.openmobilesort=false;
+      },
+      handleMobileMenu(){
+          this.openMobileFilter=this.openMobileFilter==false?true:false;
       },
       handlePage(pagevalue)
       {
@@ -76,6 +124,7 @@ export default {
            this.$refs.leftpanel.clearFilterArray();
       },
       getFilteredData(data){
+     this.filterdata=data;
 this.$refs.jumbo.getFilteredData(data)
       },
       handleSort(value)
@@ -88,6 +137,11 @@ this.$refs.jumbo.getFilteredData(data)
           this.$refs.rightComp.onFilteredApi(this.filterObject)
          this.$router.push({path:"/home",query:{'sort_by':value.sort_by,'sort_dir':value.sort_dir,filter:this.filterObject.filter}})
 
+
+      },
+      closeMobileMenu(value)
+      {
+          this.openMobileFilter=false;
 
       },
       updatedData(data)
@@ -105,12 +159,14 @@ this.$refs.jumbo.getFilteredData(data)
       },
       handleRemoveFilterByJumbo(value)
       {
+        console.log("leftjfjkdfjkdfjkdjfkdj")
        this.$refs.leftpanel.handleChecked('',value)
       },
       handleFilter(value)
       {
           this.api=value.filterapi;
           this.filterObject.filter=value.filterstring;
+          this.openMobileFilter=false;
           console.log("vkajdkf",value.filterapi)
           this.$refs.rightComp.onFilteredApi(this.filterObject);
           this.$router.push({path:"/home",query:{'filter':value.filterstring,'sort_by':this.filterObject.sort_by,'sort_dir':this.filterObject.sort_dir,page:this.filterObject.page}})
@@ -145,6 +201,9 @@ this.$refs.jumbo.getFilteredData(data)
         width: 20%;
 
 }
+.mobileleft{
+    display: none;
+}
 .pagecol2{
     width:75%;
     display: flex;
@@ -165,6 +224,9 @@ flex-basis: 75%;
     width:40px;
     border:none
 }
+.mobilesortdiv{
+    display: none;
+}
 .active{
     background: #4C0B36;
     color:white;
@@ -172,6 +234,10 @@ flex-basis: 75%;
 .next{
     border:1px solid lightgray;
     width:auto;
+}
+.anglebtn{
+    padding:0px 10px;
+    font-size: 14px;
 }
 @media(max-width:780px)
 {
@@ -183,6 +249,31 @@ flex-basis: 75%;
     .left{
         display: none;
     }
+    .mobileleft{
+        display: block;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+        overflow-y:scroll;
+         margin-bottom: 10px;
+
+        left: 0;
+        background: rgba(0,0,0,.6);
+        top:0;
+        bottom: 0;
+
+    }
+      .mobileheader{
+        display: block;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+        left: 0;
+        background: rgba(0,0,0,.6);
+        top:0;
+        bottom: 0;
+
+    }
     .right{
      margin:0px 2px;
      flex-basis: 100%;
@@ -190,8 +281,115 @@ flex-basis: 75%;
     .pagecol1{
         display: none;
     }
+    .btnred{
+background: none;
+font-size: 20px;
+border:none;
+color:white;
+    }
+    h4{
+        color:white;
+    }
+    .closinghead{
+      background: #501337;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 100%;
+      height: 20%;
+      max-height: 40%;
+      overflow-y:scroll;
+    }
     .pagecol2{
         width:100%
     }
+    .mobilesort{
+        width:100%;
+        background: rgba(0,0,0,.6);
+       
+    }
+    .mobilesortdiv{
+        position:fixed;
+        bottom:0;
+        width:100%;
+        height: 10%;
+              background: #501337;
+              color:white;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .sort,.filter{
+        width:50%;
+        display: inline-flex;
+        justify-content: center;
+    }
+     .card{
+        
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+   position:fixed;
+   display: flex;
+   flex-direction: column;
+   color:black;
+   z-index: 2;
+   background:whitesmoke;
+        bottom:0;
+  width: 100%;
+  height: 50%;
+  margin-bottom: 15%;
+  bottom:0;
+  border-radius: 5px;
+}
+.displayfilter{
+    display: flex;
+    height: auto;
+        overflow-y:auto;
+        overflow-x:hidden;
+
+    width:80%;
+        margin:0px 10px;
+          height: 50%;
+
+    align-items: center;
+}
+.displayfilter>.item{
+    width:auto;
+    color:#303030;
+    font-weight: 500;
+    font-size: 12px;
+    background: white;
+    padding:0px 1%;
+    margin: 0px 10px;
+    cursor: pointer;
+
+    text-align: center;
+    justify-content: center;
+   border: 1px solid #707070;
+border-radius: 15px;
+opacity: 0.7;
+    height: auto;
+}
+.innerrow{
+      display: flex;
+    width:100%;
+    cursor: pointer;
+}
+.clearfilter{
+    border-radius: 12px;
+    font-size: 18px;
+}
+.card>.sortitem{
+    width:100%;
+    display: inline-flex;margin:auto 0px;
+
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+}
+
+    
 }
 </style>
