@@ -53,7 +53,7 @@
       <div class="pagecol1"></div>
       <div class="pagecol2">
         <button
-          class="btn next"
+          class="btn prev"
           @click="handlePage(activePage - 1)"
           v-if="activePage > 1"
         >
@@ -323,6 +323,11 @@ export default {
 }
 .next {
   border: 1px solid lightgray;
+  width: auto;
+}
+.prev{
+    margin:0px 20px;
+     border: 1px solid lightgray;
   width: auto;
 }
 .anglebtn {
