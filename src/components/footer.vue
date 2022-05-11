@@ -193,6 +193,7 @@ ul>h6{
 }
 input{
     border:none;
+    width: calc(100% - 100px);
 }
 label{
 font-weight: 600;}
@@ -287,14 +288,14 @@ li,.sign-text{
         font-size: 20px;
     }
     .footerItems>ul>li{
-        font-size: 18px;
+        font-size: 15px;
     }
     .responsiveul{
         display: block;
         font-size: 20px;
     }
     .responsiveul>li{
-        font-size: 18px;
+        font-size: 15px;
     }
     .footerul{
         display: none;

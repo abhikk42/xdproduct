@@ -146,6 +146,8 @@ export default {
 {
   .rightCont{
       grid-template-columns: repeat(3, 1fr);
+      padding-right:0px;
+      margin:auto 0px;
 
   }
 }

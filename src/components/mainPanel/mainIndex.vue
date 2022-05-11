@@ -176,6 +176,7 @@ export default {
        console.log(this.openmobilesort)
 
       this.$refs.jumbo.handleMobileSort(value);
+      window.scrollTo(0, 0)
       
     },
     handleMobileMenu() {
@@ -261,6 +262,8 @@ export default {
           page: 1,
         },
       });
+            window.scrollTo(0, 0)
+
     },
   },
 };
@@ -270,6 +273,7 @@ export default {
 .indexContainer {
   display: flex;
   width: 100%;
+
   flex-wrap: wrap;
 }
 .head {
@@ -298,6 +302,7 @@ export default {
 }
 .right {
   transition: 0.2s ease-in-out;
+  padding-right: 40px;
 
   flex-basis: 78%;
 }
@@ -357,6 +362,7 @@ export default {
   }
   .right {
     margin: 0px 0px;
+    padding:0px;
     flex-basis: 100%;
   }
   .pagecol1 {
@@ -378,7 +384,7 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
-    height: 20%;
+    height: auto;
     max-height: 40%;
     overflow-y: scroll;
   }
@@ -464,6 +470,7 @@ export default {
   .innerrow {
     display: flex;
     width: 100%;
+    padding:auto 0px;
     cursor: pointer;
   }
   .clearfilter {

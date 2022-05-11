@@ -240,6 +240,10 @@ export default {
   .displayfilter {
     display: none;
   }
+  .headTextCont{
+    margin-top:20px;
+    margin-bottom: 20px;
+  }
   .rightAction {
     display: none;
   }
