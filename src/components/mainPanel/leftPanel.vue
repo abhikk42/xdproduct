@@ -162,8 +162,8 @@ export default {
 .filterdiv {
   width: 100%;
   margin: 0px 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-bottom: 1px solid #707070;
 }
 .checkbox {
@@ -198,10 +198,24 @@ export default {
 @media (max-width: 768px) {
   .filterdiv {
     margin: 0px auto;
+    padding:0px 10px;
   }
   .filterComp {
     width: 100%;
     margin-bottom: 40px;
   }
+}
+@media(min-width:769px) and (max-width:1024px)
+{
+   .checkboxlabel{
+     font-size: 12px;
+     margin:0px 10px;
+   }
+   .filterdiv{
+     margin:0px 10px;
+   }
+   .accordion{
+     font-size: 15px;
+   }
 }
 </style>

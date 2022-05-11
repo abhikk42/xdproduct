@@ -149,32 +149,36 @@ export default {
 }
 .displayfilter {
   display: flex;
-  overflow-y: auto;
-  align-items: center;
   overflow-x: hidden;
+  align-items: center;
+  overflow-y:auto;
+  flex-wrap: wrap;
 
   width: 80%;
   margin: 0px 10px;
-  height: 30px;
+  height: 50px;
 
   align-items: center;
 }
 .displayfilter > .item {
   width: auto;
+  display: inline-flex;
   color: #303030;
   font-weight: 500;
   font-size: 13px;
   padding: 0px 1%;
-  margin: 0px 10px;
+  margin: 10px 10px;
   cursor: pointer;
+  flex-wrap: nowrap;
 
   text-align: center;
   justify-content: flex-start;
   align-items: center;
   border: 1px solid #707070;
   border-radius: 15px;
-  opacity: 0.7;
-  height: 19px;
+  height: 20px;
+  max-height: auto;
+  
 }
 .itemsHead,
 .headText {
@@ -201,7 +205,7 @@ export default {
 }
 .cross {
   margin-left: 10px;
-  font-size: 12px;
+  font-size: 10px;
 }
 .sortbtn {
   width: 268px;

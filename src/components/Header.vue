@@ -54,7 +54,8 @@
       </div>
      
     </div>
-    <div class="mobilemenu" v-if="mobilemenu">
+    <div class="mobilemenucontainer" v-if="mobilemenu" @click="mobilemenu=false">
+    <div class="mobilemenu" >
       <div class="mobilemenuhead">
   
                 <h4 :style="{color:'white'}">MENU</h4>
@@ -71,7 +72,7 @@
         </div>
          <div class="list">  <h2>CRAFTMANSHIP</h2></div>
     </div>
-  
+  </div>
   </div>
 </template>
 
@@ -92,6 +93,14 @@ export default {
    {
     
      this.mobilemenu=this.mobilemenu==true?false:true;
+    //  if(this.mobilemenu)
+    //  {
+    //    document.getElementById('mobmenu').style.left='0';
+    //  }else
+    //  {
+    //           document.getElementById('mobmenu').style.left='-100';
+
+    //  }
    }
   }
 };
@@ -109,7 +118,7 @@ export default {
   font-family: "Jost";
   width: 100%;
 }
-.firstHeader,
+
 .midHeader {
   display: flex;
   align-items: center;
@@ -118,9 +127,13 @@ export default {
 }
 
 .firstHeader{ 
+  display:inline-flex;
+  width:100%;
+  padding:9px 0px;
+  align-items: center;
   border-top:none;   
     border-bottom:1px solid 	rgb(240,240,240);
-    height: 20px;
+    height: 22px;
     
     color:#303030;
     border-bottom-width:thin;
@@ -249,20 +262,37 @@ height: 104px;
 }
  .btncross{
 background: none;
-font-size: 20px;
 border:none;
 color:white;
     }
+    .btncross>.cross{
+      font-size: 15px;
+
+    }
+    .mobilemenucontainer{
+       display: flex;
+  width:100%;
+  position: fixed;
+ 
+  top:0;
+  left:-100;
+    background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  height: 100%;
+  flex-direction: column;
+  transition-delay:left 10s linear;
+    }
+    
 .mobilemenu{
   display: flex;
   width:70%;
   position: fixed;
   top:0;
   background:white;
-  z-index: 2;
+  z-index: 100;
   height: 100%;
   flex-direction: column;
-  transition: 0.5s;
+  transition-delay:left 10s linear;
 }
 .mobilemenu>.list{
   width:100%;
@@ -304,6 +334,7 @@ color:white;
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
+
   padding-top: 60px;
 }
 
@@ -313,7 +344,6 @@ color:white;
   font-size: 25px;
   color: #818181;
   display: block;
-  transition: 0.3s;
 }
 
 .sidepanel a:hover {
@@ -361,6 +391,34 @@ color:white;
   background-color:#444;
 }
 
+}
+@media(min-width:769px) and (max-width:1024px)
+{
+.list > h2{
+  font-size: 12px;
+}
+.icons>.selicon{
+  font-size: 10px;
+  margin:0px 10px;
+}
+.logo > .logoimg {
+width: 83px;
+height: 52px;
+}
+.headLeft>h5{
+  font-size: 10px;
+}
+.headRight>.list>h5{
+  font-size: 10px;
+
+}
+}
+@media(max-width:300px)
+{
+  .icons>.selicon{
+    font-size: 4px;
+    margin:0px 4px;
+}
 }
 
 

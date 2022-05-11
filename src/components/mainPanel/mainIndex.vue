@@ -14,13 +14,13 @@
         ref="leftpanel"
       />
     </div>
-    <div class="mobileleft" v-if="openMobileFilter">
+    <div class="mobileleft" v-if="openMobileFilter" >
       <div class="closinghead">
         <h4>Applied Filters</h4>
         <button class="btnred" v-on:click="handleMobileMenu()">
           <font-awesome-icon icon="fa-x" class="cross" />
         </button>
-        <div class="displayfilter">
+        <div class="mobiledisplayfilter">
           <p
             v-for="val in filterdata"
             :key="val.value"
@@ -78,22 +78,25 @@
         </button>
       </div>
     </div>
+ 
+    <div  class="mobilesort" id='mobsort' v-if="openmobilesort" @click="closemobdiv" >
+        
 
-    <div class="mobilesort" v-if="openmobilesort">
       <div class="card">
         <div class="sortitem"><h3>Sort By</h3></div>
         <div
           v-for="val in sortArray"
           :key="val"
-          class="sortitem"
+          :class="sortactive==val?'sortactive sortitem':'sortitem'"
           @click="handleMobileSort(val)"
         >
           {{ val }}
         </div>
       </div>
+   
     </div>
     <div class="mobilesortdiv">
-      <div class="sort" @click="openmobilesort = true">Sort</div>
+      <div class="sort" @click="toggleMobileSort">Sort</div>
       <div class="filter" v-on:click="handleMobileMenu">Filter</div>
     </div>
   </div>
@@ -116,6 +119,7 @@ export default {
       filterdata: "",
       filterObject: { filter: "", sort_by: "", sort_dir: "desc", page: 1 },
       filtervalue: "",
+      sortactive:"",
       sortArray: [
         "Newest",
         "Price(Low to High)",
@@ -132,12 +136,47 @@ export default {
     hanldeLeftPanel(value) {
       console.log("value", value);
       this.leftPanel = value == "HIDE FILTER" ? true : false;
-      document.getElementById("right").style.flexBasis =
-        this.leftPanel == true ? "75%" : "auto";
+      if(this.leftPanel)
+      {
+       document.getElementById("right").style.flexBasis ='78%';
+               document.getElementById("right").style.paddingLeft ='0px'
+
+
+      }else
+      {
+        document.getElementById("right").style.flexBasis ='auto';
+        document.getElementById("right").style.paddingLeft ='4%'
+
+
+      }
+      
+    },
+    closemobdiv()
+    {
+        document.getElementById('mobsort').style.display='none';
+    },
+    toggleMobileSort()
+    {
+      this.openmobilesort =  this.openmobilesort == false ? true : false;
+      if(this.openmobilesort)
+      {
+                  document.getElementById('mobsort').style.display='block';
+
+      }else
+      {
+                  document.getElementById('mobsort').style.display='none';
+
+      }
+
     },
     handleMobileSort(value) {
+       this.sortactive=value;
+        
+       this.openmobilesort = false;
+       console.log(this.openmobilesort)
+
       this.$refs.jumbo.handleMobileSort(value);
-      this.openmobilesort = false;
+      
     },
     handleMobileMenu() {
       this.openMobileFilter = this.openMobileFilter == false ? true : false;
@@ -172,14 +211,16 @@ export default {
       this.filterObject.sort_by = value.sort_by;
       this.filterObject.sort_dir = value.sort_dir;
       this.$refs.rightComp.onFilteredApi(this.filterObject);
+      this.activePage=1;
       this.$router.push({
         path: "/home",
         query: {
           sort_by: value.sort_by,
           sort_dir: value.sort_dir,
+          page:1,
           filter: this.filterObject.filter,
         },
-      });
+      }).catch(()=>{});
     },
     closeMobileMenu(value) {
       this.openMobileFilter = false;
@@ -208,6 +249,7 @@ export default {
       this.api = value.filterapi;
       this.filterObject.filter = value.filterstring;
       this.openMobileFilter = false;
+      this.activePage=1;
       console.log("vkajdkf", value.filterapi);
       this.$refs.rightComp.onFilteredApi(this.filterObject);
       this.$router.push({
@@ -216,7 +258,7 @@ export default {
           filter: value.filterstring,
           sort_by: this.filterObject.sort_by,
           sort_dir: this.filterObject.sort_dir,
-          page: this.filterObject.page,
+          page: 1,
         },
       });
     },
@@ -343,8 +385,13 @@ export default {
   .pagecol2 {
     width: 100%;
   }
+ 
   .mobilesort {
     width: 100%;
+    top:0;
+    height: 100%;
+    z-index: 2;
+    position: fixed;
     background: rgba(0, 0, 0, 0.6);
   }
   .mobilesortdiv {
@@ -373,15 +420,19 @@ export default {
     flex-direction: column;
     color: black;
     z-index: 2;
-    background: whitesmoke;
+    background: white;
     bottom: 0;
     width: 100%;
     height: 50%;
-    margin-bottom: 15%;
+    padding-bottom: 15%;
     bottom: 0;
     border-radius: 5px;
   }
-  .displayfilter {
+  .sortactive{
+      background: #ececec;
+
+  }
+  .mobiledisplayfilter {
     display: flex;
     height: auto;
     overflow-y: auto;
@@ -393,7 +444,7 @@ export default {
 
     align-items: center;
   }
-  .displayfilter > .item {
+  .mobiledisplayfilter > .item {
     width: auto;
     color: #303030;
     font-weight: 500;
@@ -408,7 +459,7 @@ export default {
     border: 1px solid #707070;
     border-radius: 15px;
     opacity: 0.7;
-    height: auto;
+    height: 20px;
   }
   .innerrow {
     display: flex;
@@ -423,10 +474,15 @@ export default {
     width: 100%;
     display: inline-flex;
     margin: auto 0px;
+    padding:10px auto;
 
     font-size: 18px;
     align-items: center;
     justify-content: center;
   }
+}
+@media(min-width:769px) and (max-width:1024px)
+{
+   
 }
 </style>

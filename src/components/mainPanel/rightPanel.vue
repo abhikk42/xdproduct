@@ -142,8 +142,15 @@ export default {
     transform: rotate(0.5turn);
   }
 }
+@media(min-width:769px) and (max-width:1024px)
+{
+  .rightCont{
+      grid-template-columns: repeat(3, 1fr);
 
-@media (max-width: 750px) {
+  }
+}
+
+@media (max-width: 768px) {
   .rightCont {
     display: flex;
     flex-wrap: wrap;
