@@ -196,6 +196,8 @@ export default {
           page: this.filterObject.page,
         },
       });
+            window.scrollTo(0, 0)
+
     },
     clearFilter() {
       console.log("heklljfkjkdfjkdjfkdjfdfdfdf");

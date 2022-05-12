@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Header ref="header" />
+    <!-- <Header ref="header" />
     <MainIndex ref="mainIndex" />
-    <Footer />
+    <Footer /> -->
 
     <router-view />
   </div>
 </template>
 
 <script>
-import Footer from "./components/footer.vue";
-import Header from "./components/Header.vue";
-import MainIndex from "./components/mainPanel/mainIndex.vue";
+// import Footer from "./components/footer.vue";
+// import Header from "./components/Header.vue";
+// import MainIndex from "./components/mainPanel/mainIndex.vue";
 export default {
   name: "App",
   methods: {
@@ -19,11 +19,11 @@ export default {
       this.$refs.mainIndex.handleMobileMenu(leftlist, rightlist);
     },
   },
-  components: {
-    Header,
-    Footer,
-    MainIndex,
-  },
+  // components: {
+  //   Header,
+  //   Footer,
+  //   MainIndex,
+  // },
 };
 </script>
 

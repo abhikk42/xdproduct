@@ -1,7 +1,7 @@
 <template>
   <fragment>
     <div class="rightCont" v-if="processStatus == 'success' && data">
-      <div class="prodCont" v-for="(val, ind) in data" :key="ind">
+      <div class="prodCont" v-for="(val, ind) in data" :key="ind" @click="handleProdDetail(val.url_key)">
         <div class="box">
           <img :src="val.image" class="prodImg" />
         </div>
@@ -44,6 +44,15 @@ export default {
     this.handleApiCall(this.api);
   },
   methods: {
+    handleProdDetail(url_key){
+    this.$router.push({
+      path: '/detailpage',
+        query: {
+          url_key
+        }
+    });
+
+    },
     onFilteredApi(value) {
       this.filter = value.filter;
       this.sort = value.sort_by;
